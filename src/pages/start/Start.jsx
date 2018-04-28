@@ -6,6 +6,8 @@ import './Start.scss';
 
 export const Start = () => (
   <div className="start">
-    <LinkButton to="/register">Ny bruker</LinkButton>
-    <LinkButton to="/register">Logg inn</LinkButton>
+    <div className="start__links">
+      <LinkButton extraClass="start__link" to="/register">Ny bruker</LinkButton>
+      <LinkButton extraClass="start__link" to="/register">Logg inn</LinkButton>
+    </div>
   </div>);
