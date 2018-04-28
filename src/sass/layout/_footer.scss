@@ -1,71 +1,10 @@
 .footer {
     background-color: $color-four;
     padding: 3rem 2rem;
-    font-size: 1.4rem;
+    font-size: 2rem;
     color: $color-grey-light-1;
-    -webkit-clip-path: polygon(100% 0%, 95% 100%, 0% 100%, 5% 0%);
-    clip-path: polygon(100% 0%, 95% 100%, 0% 100%, 5% 0%);
     border-radius: 3px;
     transition: .5s all;
-
-    &:hover {
-        -webkit-clip-path: polygon(95% 0%, 100% 100%, 5% 100%, 0% 0%);
-        clip-path: polygon(95% 0%, 100% 100%, 5% 100%, 0% 0%);
-    }
-
-    &__logo-box {
-        text-align: center;
-    }
-
-    &__logo {
-        width: 15rem auto;
-        height: auto;
-    }
-
-    &__navigation {
-        border-top: 1px solid $color-grey-light-1;
-        padding-top: 2rem;
-        display: inline-block;
-    }
-
-
-    &__list {
-        list-style: none;
-    }
-
-    &__item {
-        display: inline-block;
-
-        &:not(:last-child) {
-            margin-right: 1.5rem;
-        }
-    }
-
-    &__link {
-        &:link,
-        &:visited {
-            color: $color-grey-light-1;
-            background-color: $color-grey-dark-3;
-            text-decoration: none;
-            text-transform: uppercase;
-            display: inline-block;
-            transition: all .2s;
-        }
-
-        &:hover,
-        &:active {
-            color: $color-primary;
-            box-shadow: 0 1rem 2rem rgba($color-black, .4);
-            transform: rotate(5deg) scaleX(1.03);
-        }
-
-    }
-
-    &__copyright {
-        border-top: 1px solid $color-grey-light-1;
-        padding-top: 2rem;
-        width: 80%;
-        float: right;
-    }
-    
+    margin-top: 3rem;
+    text-align: center;
 }

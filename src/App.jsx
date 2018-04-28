@@ -16,8 +16,7 @@ import { Footer } from './footer/Footer';
 import initialState from './state/initialstate';
 // import AddDataTest from './components/AddDataTest';
 
-import { Start } from './pages/start/Start';
-import { Register } from './pages/register/Register';
+import { Start, Register, CreateName, NameActions, NameSelection, Rate, Rating } from './pages';
 
 import './sass/main.scss';
 
@@ -48,15 +47,15 @@ const store = createStore(reducer, initialState, enhancers);
 const App = () => (
   <Provider store={store}>
     <Router>
-      <div>
+      <div className="wrapper">
         <Header />
         <Route exact path="/" component={Start} />
         <Route path="/register" component={Register} />
-        <Route path="/nameselection" component={Register} />
-        <Route path="/createname" component={Register} />
-        <Route path="/:nameid/actions" component={Register} />
-        <Route path="/:nameid/rate" component={Register} />
-        <Route path="/:nameid/rating" component={Register} />
+        <Route path="/nameselection" component={NameSelection} />
+        <Route path="/createname" component={CreateName} />
+        <Route path="/:nameid/actions" component={NameActions} />
+        <Route path="/:nameid/rate" component={Rate} />
+        <Route path="/:nameid/rating" component={Rating} />
         <Footer />
       </div>
     </Router>

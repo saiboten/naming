@@ -1,3 +1,11 @@
 import React from 'react';
 
-export const Start = () => (<div>Start</div>);
+import { LinkButton } from '../../components/LinkButton';
+
+import './Start.scss';
+
+export const Start = () => (
+  <div className="start">
+    <LinkButton to="/register">Ny bruker</LinkButton>
+    <LinkButton to="/register">Logg inn</LinkButton>
+  </div>);

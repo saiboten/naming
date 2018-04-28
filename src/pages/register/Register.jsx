@@ -1,3 +1,8 @@
 import React from 'react';
 
-export const Register = () => (<div>Register</div>);
+import { LinkButton } from '../../components/LinkButton';
+
+export const Register = () => (
+  <div>
+    <LinkButton to="/nameselection">Videre</LinkButton>
+  </div>);
