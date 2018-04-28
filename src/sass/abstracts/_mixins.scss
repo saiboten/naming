@@ -1,0 +1,44 @@
+@mixin clearfix {
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin center-horisontal-vertical {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+// Media Query Manager
+
+/*
+
+ 0 - 600px: Phones
+ 600 - 900px: Tablet Portrait Mode
+ 900-1200px: Tablet Landscape Mode
+ (1200-1800px: Normal Styles)
+ 1800+: Big Desktops
+
+*/
+
+@mixin respond-phone {
+    @media (max-width: 600px) { @content };
+}
+
+/*
+    Argument choices:
+    phone
+    tab-port
+    tab-land
+    big-desktop
+*/
+@mixin respond($breakpoint) {
+    @if $breakpoint == phone {
+        @media (max-width: 600px) { @content };
+    }
+}
