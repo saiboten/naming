@@ -1,0 +1,10 @@
+.createname {
+    &__form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__radio-group {
+        display: flex;
+    }
+}

@@ -16,7 +16,7 @@ import { Footer } from './footer/Footer';
 import initialState from './state/initialstate';
 // import AddDataTest from './components/AddDataTest';
 
-import { Start, Login, CreateName, NameActions, NameSelection, Rate, Rating } from './pages';
+import { Start, Login, CreateName, NameActions, Rate, Rating } from './pages';
 
 import './sass/main.scss';
 
@@ -51,7 +51,6 @@ const App = () => (
         <Header />
         <Route exact path="/" component={Start} />
         <Route path="/login" component={Login} />
-        <Route path="/nameselection" component={NameSelection} />
         <Route path="/createname" component={CreateName} />
         <Route path="/:nameid/actions" component={NameActions} />
         <Route path="/:nameid/rate" component={Rate} />

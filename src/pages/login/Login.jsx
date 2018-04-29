@@ -10,7 +10,7 @@ export const LoginComponent = ({ firebase, auth }) => {
   const renderLoadingDone = () => (
     isEmpty(auth)
       ? <span>Not Authed</span>
-      : <span>Du er nå logget inn <LinkButton to="/nameselection">Fortsett</LinkButton></span>
+      : <span>Du er nå logget inn <LinkButton to="/">Fortsett</LinkButton></span>
   );
 
   return (
