@@ -3,5 +3,5 @@ export { NameActions } from './nameactions/NameActions';
 export { NameSelection } from './nameselection/NameSelection';
 export { Rate } from './rate/Rate';
 export { Rating } from './rating/Rating';
-export { Register } from './register/Register';
+export { Login } from './login/Login';
 export { Start } from './start/Start';

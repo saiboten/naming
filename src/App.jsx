@@ -1,4 +1,4 @@
-/* global window */
+
 import React from 'react';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -16,7 +16,7 @@ import { Footer } from './footer/Footer';
 import initialState from './state/initialstate';
 // import AddDataTest from './components/AddDataTest';
 
-import { Start, Register, CreateName, NameActions, NameSelection, Rate, Rating } from './pages';
+import { Start, Login, CreateName, NameActions, NameSelection, Rate, Rating } from './pages';
 
 import './sass/main.scss';
 
@@ -50,7 +50,7 @@ const App = () => (
       <div className="wrapper">
         <Header />
         <Route exact path="/" component={Start} />
-        <Route path="/register" component={Register} />
+        <Route path="/login" component={Login} />
         <Route path="/nameselection" component={NameSelection} />
         <Route path="/createname" component={CreateName} />
         <Route path="/:nameid/actions" component={NameActions} />
