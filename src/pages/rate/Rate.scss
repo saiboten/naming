@@ -1,0 +1,26 @@
+.rate {
+    &__name {
+        text-align: center;
+        font-size: 5rem;
+        margin-top: 10rem;
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 5rem;
+        margin-top: 3rem;
+    }
+
+    &__up {
+
+    }
+
+    &__down {
+
+    }
+
+    &__back-button {
+        text-align: right;
+    }
+}

@@ -16,7 +16,7 @@ import { Footer } from './footer/Footer';
 import initialState from './state/initialstate';
 // import AddDataTest from './components/AddDataTest';
 
-import { Start, Login, CreateName, NameActions, Rate, Rating } from './pages';
+import { Login, CreateName, Start, NameActions, Rate, Rating } from './pages';
 
 import './sass/main.scss';
 
@@ -52,9 +52,9 @@ const App = () => (
         <Route exact path="/" component={Start} />
         <Route path="/login" component={Login} />
         <Route path="/createname" component={CreateName} />
-        <Route path="/:nameid/actions" component={NameActions} />
-        <Route path="/:nameid/rate" component={Rate} />
-        <Route path="/:nameid/rating" component={Rating} />
+        <Route path="/nick/actions/:nameid" component={NameActions} />
+        <Route path="/nick/rate/:nameid" component={Rate} />
+        <Route path="/nick/rating/:nameid" component={Rating} />
         <Footer />
       </div>
     </Router>

@@ -1,0 +1,10 @@
+.component-renderer {
+    &__links {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__link:not(:last-child) {
+        margin-bottom: 2rem;
+    }
+}
