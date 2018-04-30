@@ -1,3 +1,4 @@
+.button,
 .button:link,
 .button:visited
  {
@@ -12,10 +13,11 @@
     text-align: center;
 }
 
+.button--small,
 .button--small:link,
 .button--small:visited
 {
     border-radius: .8rem;
     font-size: 1.6rem;
-    padding: 0.5rem 1rem;
+    padding: 1rem 1.5rem;
 }
