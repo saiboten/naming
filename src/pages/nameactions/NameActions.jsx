@@ -32,12 +32,14 @@ NameActionsComponent.defaultProps = {
   nicknames: {}
 };
 
-export const NameActions = logProps(compose(
-  firebaseConnect((props, store) => [
-    `nicknames/${store.getState().firebase.auth.uid}`
-  ]),
-  connect(({ firebase: { data, auth } }, { match: { params: { nameid } } }) => ({
-    nicknames: data.nicknames && data.nicknames[auth.uid],
-    nameid
-  }))
-)(NameActionsComponent));
+export const NameActions = (
+  compose(
+    logProps,
+    firebaseConnect((props, store) => [
+      `nicknames/${store.getState().firebase.auth.uid}`
+    ]),
+    connect(({ firebase: { data, auth } }, { match: { params: { nameid } } }) => ({
+      nicknames: data.nicknames && data.nicknames[auth.uid],
+      nameid
+    }))
+  )(NameActionsComponent));
