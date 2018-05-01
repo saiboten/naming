@@ -3,12 +3,13 @@ import React from 'react';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import { createStore, compose } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
+
 import { Provider } from 'react-redux';
 
-import { reactReduxFirebase } from 'react-redux-firebase';
+import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import firebase from 'firebase';
-
+import thunk from 'redux-thunk';
 import reducer from './state/reducers';
 
 import { Header } from './header/Header';
@@ -37,6 +38,9 @@ const rrfConfig = {
 
 /* eslint-disable */
 const enhancers = compose(
+  applyMiddleware(
+    thunk.withExtraArgument(getFirebase) // Pass getFirebase function as extra argument
+  ),
   reactReduxFirebase(firebase, rrfConfig),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, any } from 'prop-types';
+import { string, any, func } from 'prop-types';
 
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -11,48 +11,30 @@ import { logProps } from '../../pages/renderer/loadingRenderHoc';
 
 import './Rate.scss';
 
-class RateComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hei: '123'
-    };
+const RateComponent = ({
+  id, name, thumbsUp, thumbsDown
+}) => (
+  <div className="rate">
+    <div className="rate__name">{name.name}</div>
+    <div className="rate__buttons">
+      <svg className="rate__up" onClick={() => thumbsUp(id, name)}>
+        <use xlinkHref="../../../img/sprite.svg#icon-thumbs-up" />
+      </svg>
+      <svg className="rate__down" onClick={() => thumbsDown(id, name)}>
+        <use xlinkHref="../../../img/sprite.svg#icon-thumbs-down" />
+      </svg>
+    </div>
+    <div className="rate__back-button">
+      <LinkButton extraClass="button--small" to="/">Tilbake</LinkButton>
+    </div>
+  </div>);
 
-    console.log(this.state.hei);
-  }
-  /*  rateUp() {
-
-  }
-
-  rateDown() {
-
-  } */
-
-  render() {
-    const { id, name } = this.props;
-    console.log(id, name);
-
-    return (
-      <div className="rate">
-        <div className="rate__name">{name.name}</div>
-        <div className="rate__buttons">
-          <svg className="rate__up">
-            <use xlinkHref="../../../img/sprite.svg#icon-thumbs-up" />
-          </svg>
-          <svg className="rate__down">
-            <use xlinkHref="../../../img/sprite.svg#icon-thumbs-down" />
-          </svg>
-        </div>
-        <div className="rate__back-button">
-          <LinkButton extraClass="button--small" to="/">Tilbake</LinkButton>
-        </div>
-      </div>);
-  }
-}
 
 RateComponent.propTypes = {
   id: string,
-  name: any
+  name: any,
+  thumbsUp: func.isRequired,
+  thumbsDown: func.isRequired
 };
 
 RateComponent.defaultProps = {
@@ -62,8 +44,9 @@ RateComponent.defaultProps = {
 
 export const Rate = compose(
   logProps,
-  firebaseConnect(() => [
-    '/names'
+  firebaseConnect((props, store) => [
+    '/names',
+    `/rating/${store.getState().firebase.auth.uid}`
   ]),
   connect(
     ({ firebase: { data: { names } } }) => {
@@ -80,9 +63,23 @@ export const Rate = compose(
       return {};
     },
     (dispatch, { firebase }) => ({
-      rateUp: (name) => {
-        console.log(name);
-        firebase.push(`rating/rejected/${name}`, name);
+      thumbsUp: (id, name) => {
+        dispatch((dispatcher, getState) => {
+          firebase.set(`rating/${getState().firebase.auth.uid}/${id}`, {
+            name: name.name,
+            boy: name.boy,
+            accepted: true
+          });
+        });
+      },
+      thumbsDown: (id, name) => {
+        dispatch((dispatcher, getState) => {
+          firebase.set(`rating/${getState().firebase.auth.uid}/${id}`, {
+            name: name.name,
+            boy: name.boy,
+            accepted: false
+          });
+        });
       }
     })
   )
