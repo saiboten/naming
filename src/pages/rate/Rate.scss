@@ -1,8 +1,13 @@
 .rate {
-    &__name {
-        text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    &__name,
+    &__get-name {
         font-size: 5rem;
-        margin-top: 10rem;
     }
 
     &__buttons {
@@ -12,12 +17,10 @@
         margin-top: 3rem;
     }
 
-    &__up {
-
-    }
-
+    &__up,
     &__down {
-
+        width: 15rem;
+        cursor: pointer;
     }
 
     &__back-button {

@@ -1,14 +1,11 @@
 import { combineReducers } from 'redux';
 import { firebaseReducer } from 'react-redux-firebase';
-import { routerReducer } from 'react-router-redux';
 
-import profile from './profile/profile';
-
+import name from './name';
 
 const todoApp = combineReducers({
-  profile,
-  firebase: firebaseReducer,
-  routing: routerReducer
+  name,
+  firebase: firebaseReducer
 });
 
 export default todoApp;

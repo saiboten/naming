@@ -77,7 +77,7 @@ export class CreateNameComponent extends React.Component {
             </div>
           </div>
           <div className="createname__navigation">
-            <LinkButton to="/nameselection" extraClass="button--small">Tilbake</LinkButton>
+            <LinkButton to="/" extraClass="button--small">Tilbake</LinkButton>
             <input className="button button--small createname__submit" type="submit" value="OK" />
           </div>
         </form>
