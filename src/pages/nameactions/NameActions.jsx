@@ -17,9 +17,7 @@ const NameActionsComponent = ({ nicknames, nick }) => (
       <LinkButton to={`/nick/rating/${nick}`}>Aktuelle</LinkButton>
       <LinkButton to={`/nick/administer/${nick}`}>Administrer</LinkButton>
     </div>
-    <div>
-      <LinkButton extraClass="button--small" to="/">Tilbake</LinkButton>
-    </div>
+    <LinkButton extraClass="nameactions__back button--small" to="/">Tilbake</LinkButton>
 
   </div>);
 

@@ -20,3 +20,9 @@ body {
     box-sizing: border-box;
     background-color: $color-secondary;
 }
+
+a,
+a:visited {
+    text-decoration: none;
+    color: currentColor;
+}

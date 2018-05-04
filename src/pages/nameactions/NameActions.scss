@@ -1,7 +1,15 @@
 .nameactions {
+
+    display: flex;
+    flex-direction: column;
+
     &__buttons {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
+    }
+
+    &__back {
+        align-self: flex-end;
     }
 }

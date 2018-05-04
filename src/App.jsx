@@ -42,7 +42,7 @@ const enhancers = compose(
     thunk.withExtraArgument(getFirebase) // Pass getFirebase function as extra argument
   ),
   reactReduxFirebase(firebase, rrfConfig),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 /* eslint-enable */
 
