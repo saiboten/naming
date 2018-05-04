@@ -8,13 +8,14 @@ import { LinkButton } from '../../components/LinkButton';
 
 import './NameActions.scss';
 
-const NameActionsComponent = ({ nicknames, nameid }) => (
+const NameActionsComponent = ({ nicknames, nick }) => (
   <div className="nameactions">
-    <h2>{nicknames[nameid] ? nicknames[nameid].nickname : ''}</h2>
+    <h2>{nicknames[nick] ? nicknames[nick].nickname : ''}</h2>
 
     <div className="nameactions__buttons">
-      <LinkButton to={`/nick/rate/${nameid}`}>Sorter</LinkButton>
-      <LinkButton to={`/nick/rating/${nameid}`}>Aktuelle</LinkButton>
+      <LinkButton to={`/nick/rate/${nick}`}>Sorter</LinkButton>
+      <LinkButton to={`/nick/rating/${nick}`}>Aktuelle</LinkButton>
+      <LinkButton to={`/nick/administer/${nick}`}>Administrer</LinkButton>
     </div>
     <div>
       <LinkButton extraClass="button--small" to="/">Tilbake</LinkButton>
@@ -25,7 +26,7 @@ const NameActionsComponent = ({ nicknames, nameid }) => (
 
 NameActionsComponent.propTypes = {
   nicknames: any,
-  nameid: string.isRequired
+  nick: string.isRequired
 };
 
 NameActionsComponent.defaultProps = {
@@ -38,8 +39,8 @@ export const NameActions = (
     firebaseConnect((props, store) => [
       `nicknames/${store.getState().firebase.auth.uid}`
     ]),
-    connect(({ firebase: { data, auth } }, { match: { params: { nameid } } }) => ({
+    connect(({ firebase: { data, auth } }, { match: { params: { nick } } }) => ({
       nicknames: data.nicknames && data.nicknames[auth.uid],
-      nameid
+      nick
     }))
   )(NameActionsComponent));

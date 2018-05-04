@@ -15,7 +15,7 @@ import './NameSelection.scss';
 const NameSelectionComponent = ({ nicknames }) => (
   <div className="nameselection">
     <ul className="nameselection__name-list">
-      {Object.keys(nicknames).map(nickName => (<li key={nickName} className="nameselection__name"><Link to={`/nick/actions/${nickName}`}>{nicknames[nickName].nickname}</Link></li>))}
+      {nicknames ? Object.keys(nicknames).map(nickName => (<li key={nickName} className="nameselection__name"><Link to={`/nick/actions/${nickName}`}>{nicknames[nickName].nickname}</Link></li>)) : null}
     </ul>
     <div className="nameselection__actions">
       <LinkButton extraClass="nameselection__action button--small" to="/createname">Lag nytt navn</LinkButton>
@@ -32,12 +32,9 @@ NameSelectionComponent.defaultProps = {
 };
 
 export const NameSelection = compose(
-  firebaseConnect((props, store) => {
-    console.log(store.getState());
-    return [
-      `nicknames/${store.getState().firebase.auth.uid}`
-    ];
-  }),
+  firebaseConnect((props, store) => [
+    `nicknames/${store.getState().firebase.auth.uid}`
+  ]),
   connect(({ firebase: { data, auth } }) => ({
     nicknames: data.nicknames && data.nicknames[auth.uid],
   }))

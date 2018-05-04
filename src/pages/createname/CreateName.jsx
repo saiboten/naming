@@ -102,11 +102,10 @@ export const CreateName = compose(withFirebase, connect(
   }),
   (dispatch, { firebase, history }) => ({
     addNickName: ({ uid, nickname, boy }) => {
-      console.log(uid, nickname, boy, firebase);
-      /* firebase.push(`nicknames/${uid}`, {
+      firebase.push(`nicknames/${uid}`, {
         nickname,
         boy
-      }); */
+      });
       history.push('/');
     }
   })

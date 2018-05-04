@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { any } from 'prop-types';
 import { isLoaded, isEmpty } from 'react-redux-firebase';
 import { LinkButton } from '../../components/LinkButton';
+import { Loader } from '../../components/Loader';
 
 export function logProps(WrappedComponent) {
   const NotLoggedIn = () => (
@@ -18,7 +19,7 @@ export function logProps(WrappedComponent) {
       (!isEmpty(auth) ?
         (<WrappedComponent {...props} />) :
         NotLoggedIn());
-    return isLoaded(auth) ? renderLoadingDone() : <div>Loading</div>;
+    return isLoaded(auth) ? renderLoadingDone() : <Loader />;
   };
 
   ComponentRendererComponent.propTypes = {

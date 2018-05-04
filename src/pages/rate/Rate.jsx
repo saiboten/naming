@@ -12,23 +12,23 @@ import { setName } from '../../state/actions/name';
 import './Rate.scss';
 
 const RateComponent = ({
-  name: { id, name }, rate, getNewName
+  name: { id, name }, rate, getNewName, nick
 }) => {
-  const nameOrLoad = id ? <div className="rate__name">{name.name} </div> : <button className="rate__get-name button" onClick={getNewName}>Hent navn</button>;
+  const nameOrLoad = id ? <div className="rate__name">{name.name} </div> : <button className="rate__get-name button" onClick={getNewName}>Start sortering</button>;
 
   return (
     <div className="rate">
       {nameOrLoad}
       <div className="rate__buttons">
-        <svg className="rate__up" onClick={() => rate(id, name, true)}>
+        <svg className="rate__up" onClick={() => rate(nick, id, name, true)}>
           <use xlinkHref="../../../img/sprite.svg#icon-thumbs-up" />
         </svg>
-        <svg className="rate__down" onClick={() => rate(id, name, false)}>
+        <svg className="rate__down" onClick={() => rate(nick, id, name, false)}>
           <use xlinkHref="../../../img/sprite.svg#icon-thumbs-down" />
         </svg>
       </div>
       <div className="rate__back-button">
-        <LinkButton extraClass="button--small" to="/">Tilbake</LinkButton>
+        <LinkButton extraClass="button--small" to={`/nick/actions/${nick}`}>Tilbake</LinkButton>
       </div>
     </div>);
 };
@@ -42,7 +42,8 @@ RateComponent.propTypes = {
     id: string
   }),
   rate: func.isRequired,
-  getNewName: func.isRequired
+  getNewName: func.isRequired,
+  nick: string.isRequired
 };
 
 RateComponent.defaultProps = {
@@ -56,12 +57,12 @@ RateComponent.defaultProps = {
 
 export const Rate = compose(
   logProps,
-  firebaseConnect((props, store) => [
+  firebaseConnect(({ match: { params: { nick } } }, store) => [
     '/names',
-    `/rating/${store.getState().firebase.auth.uid}`
+    `/rating/${store.getState().firebase.auth.uid}/${nick}`
   ]),
   connect(
-    ({ name: { name } }) => ({ name }),
+    ({ name: { name } }, { match: { params: { nick } } }) => ({ name, nick }),
     (dispatch, { firebase }) => ({
       getNewName: () => {
         dispatch((dispatcher, getState) => {
@@ -70,16 +71,16 @@ export const Rate = compose(
           const { names, rating } = data;
 
           if (names) {
-            const ratedNames = Object.values(rating[uid]);
+            const ratedNames = rating[uid];
 
             dispatcher(setName(names, ratedNames));
           }
         });
       },
-      rate: (id, name, thumbsUp) => {
+      rate: (nick, id, name, thumbsUp) => {
         dispatch((dispatcher, getState) => {
           const { firebase: { data: { names } } } = getState();
-          firebase.set(`rating/${getState().firebase.auth.uid}/${id}`, {
+          firebase.set(`rating/${getState().firebase.auth.uid}/${nick}/${id}`, {
             name: name.name,
             boy: name.boy,
             accepted: thumbsUp
