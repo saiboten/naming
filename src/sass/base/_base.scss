@@ -19,10 +19,10 @@ html {
 body {
     box-sizing: border-box;
     background-color: $color-secondary;
+    color: $color-primary;
 }
 
 a,
 a:visited {
     text-decoration: none;
-    color: currentColor;
 }

@@ -1,0 +1,17 @@
+.link,
+.link:visited {
+    border-bottom: 1px solid $color-primary;
+    color: $color-primary;
+    transition: all .2s;
+    display: inline-block;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    &:active {
+        transform: rotate(180deg);
+        border-bottom: none;
+        border-top: 1px solid $color-primary;
+    }
+}

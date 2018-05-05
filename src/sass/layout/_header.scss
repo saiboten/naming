@@ -10,6 +10,7 @@
     text-transform: uppercase;
     text-decoration: underline;
     margin-bottom: 3rem;
+    color: $color-primary;
 
     &__content {
         @include center-horisontal-vertical;

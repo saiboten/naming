@@ -21,6 +21,12 @@
     &__down {
         width: 15rem;
         cursor: pointer;
+        transition: all .2s;
+        fill: #B8D5B8; // Color primary
+
+        &:hover {
+            transform: scale(1.1);
+        }
     }
 
     &__back-button {

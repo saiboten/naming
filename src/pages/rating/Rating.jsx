@@ -47,7 +47,7 @@ export const RatingComponent = ({ rating, uid, nick }) => {
   return (
     <div className="rating">
       {userList}
-      <LinkButton extraClass="rating__back button--small" to={`/nick/actions/${nick}`}>Tilbake</LinkButton>
+      <LinkButton extraClass="rating__back button--small button--secondary" to={`/nick/actions/${nick}`}>Tilbake</LinkButton>
     </div>);
 };
 

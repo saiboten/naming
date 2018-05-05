@@ -28,7 +28,7 @@ const RateComponent = ({
         </svg>
       </div>
       <div className="rate__back-button">
-        <LinkButton extraClass="button--small" to={`/nick/actions/${nick}`}>Tilbake</LinkButton>
+        <LinkButton extraClass="button--small button--secondary" to={`/nick/actions/${nick}`}>Tilbake</LinkButton>
       </div>
     </div>);
 };

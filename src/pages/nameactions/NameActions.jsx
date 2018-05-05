@@ -10,14 +10,14 @@ import './NameActions.scss';
 
 const NameActionsComponent = ({ nicknames, nick }) => (
   <div className="nameactions">
-    <h2>{nicknames[nick] ? nicknames[nick].nickname : ''}</h2>
+    <h2 className="nameactions__header">{nicknames[nick] ? nicknames[nick].nickname : ''}</h2>
 
     <div className="nameactions__buttons">
       <LinkButton to={`/nick/rate/${nick}`}>Sorter</LinkButton>
       <LinkButton to={`/nick/rating/${nick}`}>Aktuelle</LinkButton>
       <LinkButton to={`/nick/administer/${nick}`}>Administrer</LinkButton>
     </div>
-    <LinkButton extraClass="nameactions__back button--small" to="/">Tilbake</LinkButton>
+    <LinkButton extraClass="nameactions__back button--small button--secondary" to="/">Tilbake</LinkButton>
 
   </div>);
 
