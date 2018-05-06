@@ -3,6 +3,10 @@
     display: flex;
     flex-direction: column;
 
+    &__header {
+        align-self: flex-start;
+    }
+
     &__buttons {
         display: flex;
         flex-direction: column;

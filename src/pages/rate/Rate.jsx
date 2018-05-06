@@ -14,19 +14,24 @@ import './Rate.scss';
 const RateComponent = ({
   name: { id, name }, rate, getNewName, nick
 }) => {
-  const nameOrLoad = id ? <div className="rate__name">{name.name} </div> : <button className="rate__get-name button" onClick={getNewName}>Start sortering</button>;
+  const nameOrLoad = id ? (
+    <div className="rate__name">{name.name} </div>
+  ) : <button className="rate__get-name button" onClick={getNewName}>Start sortering</button>;
+
+  const rateButtons = id ? (
+    <div className="rate__buttons">
+      <svg className="rate__up" onClick={() => rate(nick, id, name, true)}>
+        <use xlinkHref="../../../img/sprite.svg#icon-thumbs-up" />
+      </svg>
+      <svg className="rate__down" onClick={() => rate(nick, id, name, false)}>
+        <use xlinkHref="../../../img/sprite.svg#icon-thumbs-down" />
+      </svg>
+    </div>) : null;
 
   return (
     <div className="rate">
       {nameOrLoad}
-      <div className="rate__buttons">
-        <svg className="rate__up" onClick={() => rate(nick, id, name, true)}>
-          <use xlinkHref="../../../img/sprite.svg#icon-thumbs-up" />
-        </svg>
-        <svg className="rate__down" onClick={() => rate(nick, id, name, false)}>
-          <use xlinkHref="../../../img/sprite.svg#icon-thumbs-down" />
-        </svg>
-      </div>
+      {rateButtons}
       <div className="rate__back-button">
         <LinkButton extraClass="button--small button--secondary" to={`/nick/actions/${nick}`}>Tilbake</LinkButton>
       </div>
