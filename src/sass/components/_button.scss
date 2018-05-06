@@ -4,10 +4,11 @@
  {
     text-decoration: none;
     font-size: 3rem;
-    color: $color-primary;
-    background-color: $color-tertiary;
+    font-weight: 700;
+    color: $color-four;
+    background-image: linear-gradient(to bottom, $color-primary, $color-tertiary);
     border: 1px solid $color-secondary;
-    padding: 2rem 4rem;
+    padding: 1rem 2rem;
     border-radius: 1rem;
     cursor: pointer;
     text-align: center;
@@ -15,11 +16,11 @@
         box-shadow: .5rem 1rem 2rem rgba(0,0,0, .4);
 
     &:hover {
-        transform: scale(1.05);
+        transform: scale(1.05) translateY(-5px);
     }
 
     &:active {
-        transform: rotate(1deg) scale(0.9);
+        transform: rotate(1deg) scale(0.9) translateY(5px);
     }
 }
 
@@ -29,9 +30,9 @@
  {
     border: 3px solid $color-primary;
     background-color: $color-secondary;
+    background-image: none;
     color: $color-primary;
     font-weight: 600;
-    box-shadow: .5rem .5rem 1rem rgba(0,0,0, .4);
 }
 
 .button--small,
@@ -42,4 +43,5 @@
     font-size: 1.6rem;
     padding: 1rem 1.5rem;
     display: inline-block;
+    box-shadow: .5rem .5rem 1rem rgba(0,0,0, .4);
 }

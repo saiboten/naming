@@ -8,14 +8,32 @@
 
     &__sub-header {
         font-size: 2.5rem;
-    }
-
-    &__list {
+        border-bottom: 2px solid #B8D5B8; /* TODO Color primary */
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+
+    &__header-icon {
+        width: 10rem;
+        height: 10rem;
+        fill: #B8D5B8;
+    }
+
+    &__list-element {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-width: 20rem;
+        padding-bottom: .5rem;
         &:not(:last-child) {
             margin-bottom: 1rem;
+        }
+    }
+
+    &__list {
+        &:not(:last-child) {
+            margin-bottom: 7rem;
         }
     }
 
@@ -23,9 +41,11 @@
     &__down {
         width: 2.5rem;
         height: 2.5rem;
+        fill: #424242; /* Color four */
     }
 
     &__back {
+        margin-top: 2rem;
         align-self: flex-end;
     }
 }

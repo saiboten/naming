@@ -1,5 +1,5 @@
 import React from 'react';
-import { any, string } from 'prop-types';
+import { any, string, func } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
@@ -10,39 +10,53 @@ import { Loader } from '../../components/Loader';
 
 import './Rating.scss';
 
-const renderRatedUsers = (users) => {
+const renderRatedUsers = (usersObject, toggleNameAccepted, nick) => {
+  const userIds = Object.keys(usersObject);
+  const users = userIds.map(key => ({
+    id: key,
+    name: usersObject[key].name,
+    accepted: usersObject[key].accepted,
+    boy: usersObject[key].boy,
+  })).sort((a, b) => a.name.localeCompare(b.name));
+
   const thumbsUpList = users.filter(user => user.accepted);
   const thumbsDownList = users.filter(user => !user.accepted);
 
   const thumbsUp = thumbsUpList.map(el => (
-    <div className="rating__list" key={el.name}>
+    <div className="rating__list-element" key={el.name}>
       {el.name}
-      <svg className="rating__up">
-        <use xlinkHref="../../../img/sprite.svg#icon-thumbs-up" />
-      </svg>
+      <button className="button button--small" onClick={() => toggleNameAccepted(nick, el)}>
+        <svg className="rating__down">
+          <use xlinkHref="../../../img/sprite.svg#icon-thumbs-down" />
+        </svg>
+      </button>
     </div>
   ));
 
   const thumbsDown = thumbsDownList.map(el => (
-    <div className="rating__list" key={el.name}>
+    <div className="rating__list-element" key={el.name}>
       {el.name}
-      <svg className="rating__down">
-        <use xlinkHref="../../../img/sprite.svg#icon-thumbs-down" />
-      </svg>
+      <button className="button button--small" onClick={() => toggleNameAccepted(nick, el)}>
+        <svg className="rating__up">
+          <use xlinkHref="../../../img/sprite.svg#icon-thumbs-up" />
+        </svg>
+      </button>
     </div>
   ));
 
   return (
     <div>
-      <h2 className="rating__sub-header">Bra navn</h2>
-      {thumbsUp}
-      <h2 className="rating__sub-header">Dårlige navn</h2>
-      {thumbsDown}
+      <h2 className="rating__sub-header heading-primary">Bra navn <svg className="rating__header-icon"><use xlinkHref="../../../img/sprite.svg#icon-thumbs-up" /></svg></h2>
+      <div className="rating__list">{thumbsUp}</div>
+      <h2 className="rating__sub-header heading-primary">Dårlige navn <svg className="rating__header-icon"><use xlinkHref="../../../img/sprite.svg#icon-thumbs-down" /></svg></h2>
+      <div className="rating__list">{thumbsDown}</div>
     </div>);
 };
 
-export const RatingComponent = ({ rating, uid, nick }) => {
-  const userList = rating[uid] && rating[uid][nick] ? renderRatedUsers(Object.values(rating[uid][nick])) : <Loader />;
+export const RatingComponent = ({
+  rating, uid, nick, toggleNameAccepted
+}) => {
+  const userList = rating[uid] && rating[uid][nick] ? renderRatedUsers(rating[uid][nick], toggleNameAccepted, nick) : <Loader />;
 
   return (
     <div className="rating">
@@ -54,7 +68,8 @@ export const RatingComponent = ({ rating, uid, nick }) => {
 RatingComponent.propTypes = {
   rating: any,
   uid: string,
-  nick: string.isRequired
+  nick: string.isRequired,
+  toggleNameAccepted: func.isRequired
 };
 
 RatingComponent.defaultProps = {
@@ -75,7 +90,16 @@ export const Rating = compose(
         uid,
         nick
       }),
-    () => ({
+    (dispatch, { firebase }) => ({
+      toggleNameAccepted: (nick, nameDetails) => {
+        dispatch((dispatcher, getState) => {
+          firebase.set(`rating/${getState().firebase.auth.uid}/${nick}/${nameDetails.id}`, {
+            name: nameDetails.name,
+            boy: nameDetails.boy,
+            accepted: !nameDetails.accepted
+          });
+        });
+      }
     })
   )
 )(RatingComponent);

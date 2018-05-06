@@ -14,8 +14,9 @@ import './NameSelection.scss';
 
 const NameSelectionComponent = ({ nicknames }) => (
   <div className="nameselection">
+    <h2 className="header-primary">Hvem du vil velge navn til?</h2>
     <ul className="nameselection__name-list">
-      {nicknames ? Object.keys(nicknames).map(nickName => (<li key={nickName} className="nameselection__name"><Link className="link" to={`/nick/actions/${nickName}`}>{nicknames[nickName].nickname}</Link></li>)) : null}
+      {nicknames ? Object.keys(nicknames).map(nickName => (<li key={nickName} className="nameselection__name"><Link className="nameselection__link link" to={`/nick/actions/${nickName}`}>{nicknames[nickName].nickname}</Link></li>)) : <p>Laster.</p>}
     </ul>
     <p className="nameselection__info">Du kan enten finne nye navn, eller samarbeide med andre om å finne navn.</p>
     <div className="nameselection__actions">

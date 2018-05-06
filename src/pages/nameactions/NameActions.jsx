@@ -13,9 +13,9 @@ const NameActionsComponent = ({ nicknames, nick }) => (
     <h2 className="nameactions__header">{nicknames[nick] ? nicknames[nick].nickname : ''}</h2>
 
     <div className="nameactions__buttons">
-      <LinkButton to={`/nick/rate/${nick}`}>Sorter</LinkButton>
-      <LinkButton to={`/nick/rating/${nick}`}>Aktuelle</LinkButton>
-      <LinkButton to={`/nick/administer/${nick}`}>Administrer</LinkButton>
+      <LinkButton extraClass="nameactions__button" to={`/nick/rate/${nick}`}>Sorter</LinkButton>
+      <LinkButton extraClass="nameactions__button" to={`/nick/rating/${nick}`}>Aktuelle</LinkButton>
+      <LinkButton extraClass="nameactions__button" to={`/nick/administer/${nick}`}>Administrer</LinkButton>
     </div>
     <LinkButton extraClass="nameactions__back button--small button--secondary" to="/">Tilbake</LinkButton>
 
