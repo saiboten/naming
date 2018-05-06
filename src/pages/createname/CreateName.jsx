@@ -60,8 +60,8 @@ export class CreateNameComponent extends React.Component {
   render() {
     return (
       <div className="createname">
-        <h2 className="createname__sub-heading">Velg kallenavn</h2>
-        <p className="createname__explanation">For at vi skal kunne forstå hvem du forsøker å navngi, må du oppgi et kallenavn. Dette kallenavnet kan være hva som helst, f.eks &quot;Junior&quot;, &quot;Småen&quot;, &quot;Nye Hund 2019&quot; eller noe helt annet.</p>
+        <h2 className="createname__sub-heading heading-primary">Velg kallenavn</h2>
+        <p className="createname__explanation">For at vi skal kunne forstå hvem du forsøker å navngi, må du oppgi et kallenavn. Dette kallenavnet kan være hva som helst, f.eks &quot;Junior&quot;, &quot;Småen&quot;, &quot;Ny Hund 2019&quot; eller noe helt annet.</p>
         <form className="createname__form" onSubmit={this.submit}>
           <input className="createname__name" onChange={this.nameChanged} type="text" value={this.state.nickname} placeholder="Kallenavn" />
           <div className="createname__radio-group">

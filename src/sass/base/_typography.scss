@@ -6,6 +6,9 @@ body {
 }
 
 .heading-primary {
+    display: inline-block;
     border-bottom: 1px solid $color-primary;
     margin-bottom: 1.5rem;
+    color: $color-primary;
+    font-weight: 700;
 }

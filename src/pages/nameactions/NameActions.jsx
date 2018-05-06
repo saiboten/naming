@@ -10,7 +10,7 @@ import './NameActions.scss';
 
 const NameActionsComponent = ({ nicknames, nick }) => (
   <div className="nameactions">
-    <h2 className="nameactions__header">{nicknames[nick] ? nicknames[nick].nickname : ''}</h2>
+    <h2 className="heading-primary">{nicknames[nick] ? nicknames[nick].nickname : ''}</h2>
 
     <div className="nameactions__buttons">
       <LinkButton extraClass="nameactions__button" to={`/nick/rate/${nick}`}>Sorter</LinkButton>

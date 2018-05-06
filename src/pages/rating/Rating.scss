@@ -6,7 +6,7 @@
     flex-direction: column;
     align-items: center;
 
-    &__sub-header {
+    &__sub-header.heading-primary {
         font-size: 2.5rem;
         border-bottom: 2px solid #B8D5B8; /* TODO Color primary */
         display: flex;
