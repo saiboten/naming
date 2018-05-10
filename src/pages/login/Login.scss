@@ -1,0 +1,20 @@
+.login {
+    display: flex;
+    flex-direction: column;
+
+    &__button-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__google-button {
+        margin: 2rem 0;
+    }
+
+    &__logged-in {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+}

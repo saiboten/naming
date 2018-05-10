@@ -6,3 +6,4 @@ export { Rating } from './rating/Rating';
 export { Login } from './login/Login';
 export { Start } from './start/Start';
 export { Administer } from './administer/Administer';
+export { Join } from './join/Join';

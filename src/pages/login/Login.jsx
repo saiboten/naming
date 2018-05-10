@@ -4,23 +4,26 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import { LinkButton } from '../../components/LinkButton';
-// import GoogleButton from 'react-google-button' // optional
+
+import './Login.scss';
 
 export const LoginComponent = ({ firebase, auth }) => {
   const renderLoadingDone = () => (
     isEmpty(auth)
-      ? <span>Not Authed</span>
-      : <span>Du er nå logget inn <LinkButton to="/">Fortsett</LinkButton></span>
+      ?
+        <button
+          className="button login__google-button"
+          onClick={() => firebase.login({ provider: 'google', type: 'popup' })}
+        >Google
+        </button>
+      : <div className="login__logged-in">Du er logget inn <LinkButton to="/">Fortsett</LinkButton></div>
   );
 
   return (
-    <div>
-      <button // <GoogleButton/> button can be used instead
-        onClick={() => firebase.login({ provider: 'google', type: 'popup' })}
-      >Login With Google
-      </button>
-      <div>
-        <h2>Auth</h2>
+    <div className="login">
+      <h2 className="heading-primary">Logg inn med</h2>
+
+      <div className="login__button-wrapper">
         {
         !isLoaded(auth)
         ? <span>Loading...</span>

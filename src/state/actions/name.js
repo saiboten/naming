@@ -17,3 +17,15 @@ export const setName = (names) => {
   };
 };
 
+export const joinFailedAction = () => ({
+  type: types.FIND_JOIN_USER_FAILED
+});
+
+export const joinSuccessAction = () => ({
+  type: types.FIND_JOIN_USER_SUCCESS
+});
+
+export const clearJoinStatusAction = () => ({
+  type: types.FIND_JOIN_USER_CLEAR
+});
+

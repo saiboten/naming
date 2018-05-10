@@ -1,3 +1,7 @@
 
 // Name
 export const SET_NAME = 'SET_NAME';
+export const FIND_JOIN_USER_SUCCESS = 'FIND_JOIN_USER_SUCCESS';
+export const FIND_JOIN_USER_FAILED = 'FIND_JOIN_USER_FAILED';
+export const FIND_JOIN_USER_CLEAR = 'FIND_JOIN_USER_CLEAR';
+

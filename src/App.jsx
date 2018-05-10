@@ -17,7 +17,7 @@ import { Footer } from './footer/Footer';
 import initialState from './state/initialstate';
 // import AddDataTest from './components/AddDataTest';
 
-import { Login, CreateName, Start, NameActions, Rate, Rating, Administer } from './pages';
+import { Login, CreateName, Start, NameActions, Rate, Rating, Administer, Join } from './pages';
 
 import './sass/main.scss';
 
@@ -42,7 +42,7 @@ const enhancers = compose(
     thunk.withExtraArgument(getFirebase) // Pass getFirebase function as extra argument
   ),
   reactReduxFirebase(firebase, rrfConfig),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 /* eslint-enable */
 
@@ -61,6 +61,7 @@ const App = () => (
         <Route path="/nick/rate/:nick" component={Rate} />
         <Route path="/nick/rating/:nick" component={Rating} />
         <Route path="/nick/administer/:nick" component={Administer} />
+        <Route path="/join" component={Join} />
 
         <Footer />
       </div>

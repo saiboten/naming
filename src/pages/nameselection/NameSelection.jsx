@@ -21,7 +21,7 @@ const NameSelectionComponent = ({ nicknames }) => (
     <p className="nameselection__info">Du kan enten finne nye navn, eller samarbeide med andre om å finne navn.</p>
     <div className="nameselection__actions">
       <LinkButton extraClass="nameselection__action button--small" to="/createname">Nytt navn</LinkButton>
-      <LinkButton extraClass="nameselection__action button--small" to="/createname">Samarbeid</LinkButton>
+      <LinkButton extraClass="nameselection__action button--small" to="/join">Samarbeid</LinkButton>
     </div>
   </div>);
 

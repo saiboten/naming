@@ -7,6 +7,24 @@ const name = (state = {}, action) => {
         ...state,
         name: action.name
       };
+    case types.FIND_JOIN_USER_SUCCESS:
+      return {
+        ...state,
+        joinSuccess: true,
+        joinFailed: false
+      };
+    case types.FIND_JOIN_USER_FAILED:
+      return {
+        ...state,
+        joinSuccess: false,
+        joinFailed: true
+      };
+    case types.FIND_JOIN_USER_CLEAR:
+      return {
+        ...state,
+        joinSuccess: false,
+        joinFailed: false
+      };
     default:
       return state;
   }

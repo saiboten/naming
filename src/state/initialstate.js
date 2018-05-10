@@ -1,3 +1,6 @@
 export default {
-  name: {}
+  name: {
+    joinSuccess: false,
+    joinFailed: false
+  }
 };
