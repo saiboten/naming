@@ -54,9 +54,9 @@ const renderRatedUsers = (usersObject, toggleNameAccepted, nick) => {
 };
 
 export const RatingComponent = ({
-  rating, uid, nick, toggleNameAccepted
+  rating, nick, toggleNameAccepted
 }) => {
-  const userList = rating[uid] && rating[uid][nick] ? renderRatedUsers(rating[uid][nick], toggleNameAccepted, nick) : <Loader />;
+  const userList = rating ? renderRatedUsers(rating, toggleNameAccepted, nick) : <Loader />;
 
   return (
     <div className="rating">
@@ -67,7 +67,7 @@ export const RatingComponent = ({
 
 RatingComponent.propTypes = {
   rating: any,
-  uid: string,
+  // uid: string,
   nick: string.isRequired,
   toggleNameAccepted: func.isRequired
 };
@@ -81,19 +81,19 @@ export const Rating = compose(
   logProps,
   firebaseConnect(({ match: { params: { nick } } }, store) => [
     '/names',
-    `/rating/${store.getState().firebase.auth.uid}/${nick}`
+    `/nicknames/${nick}/rating/${store.getState().firebase.auth.uid}`
   ]),
   connect(
-    ({ firebase: { auth: { uid }, data: { rating } } }, { match: { params: { nick } } }) =>
+    ({ firebase: { auth: { uid }, data: { nicknames } } }, { match: { params: { nick } } }) =>
       ({
-        rating,
+        rating: nicknames && nicknames[nick] ? nicknames[nick].rating[uid] : {},
         uid,
         nick
       }),
     (dispatch, { firebase }) => ({
       toggleNameAccepted: (nick, nameDetails) => {
         dispatch((dispatcher, getState) => {
-          firebase.set(`rating/${getState().firebase.auth.uid}/${nick}/${nameDetails.id}`, {
+          firebase.set(`nicknames/${nick}/rating/${getState().firebase.auth.uid}/${nameDetails.id}`, {
             name: nameDetails.name,
             boy: nameDetails.boy,
             accepted: !nameDetails.accepted

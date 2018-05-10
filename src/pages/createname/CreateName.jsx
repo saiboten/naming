@@ -49,10 +49,10 @@ export class CreateNameComponent extends React.Component {
 
     const { nickname, boy } = this.state;
 
-
     this.props.addNickName({
       nickname,
       boy,
+      email: this.props.email,
       uid: this.props.uid
     });
   }
@@ -88,24 +88,35 @@ export class CreateNameComponent extends React.Component {
 
 CreateNameComponent.propTypes = {
   addNickName: func.isRequired,
-  uid: string
+  uid: string,
+  email: string.isRequired
 };
 
 CreateNameComponent.defaultProps = {
-  uid: ''
+  uid: '',
 };
 
 export const CreateName = compose(withFirebase, connect(
   ({ firebase }) => ({
     uid: firebase.auth.uid,
+    email: firebase.auth.email,
     firebase
   }),
   (dispatch, { firebase, history }) => ({
-    addNickName: ({ uid, nickname, boy }) => {
-      firebase.push(`nicknames/${uid}`, {
+    addNickName: ({
+      uid, email, nickname, boy
+    }) => {
+      const id = firebase.push('nicknames', {
         nickname,
-        boy
+        boy,
+        owner: uid
+      }).key;
+      firebase.set(`users/${uid}/nicknames/${id}`, {
+        nickname
       });
+
+      firebase.push(`nicknames/${id}/participants`, email);
+
       history.push('/');
     }
   })

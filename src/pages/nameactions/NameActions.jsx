@@ -34,8 +34,8 @@ NameActionsComponent.defaultProps = {
 export const NameActions = (
   compose(
     logProps,
-    firebaseConnect((props, store) => [
-      `nicknames/${store.getState().firebase.auth.uid}`
+    firebaseConnect(({ nick }) => [
+      `nicknames/${nick}`
     ]),
     connect(({ firebase: { data, auth } }, { match: { params: { nick } } }) => ({
       nicknames: data.nicknames && data.nicknames[auth.uid],
