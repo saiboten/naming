@@ -1,16 +1,4 @@
 .nameselection {
- 
-    &__name-list {
-        font-size: 2.5rem;
-        margin-bottom: 2rem;
-    }
-
-    &__name {
-        text-decoration: none;
-        list-style: none;
-        cursor: pointer;
-    }
-
     &__actions {
         display: flex;
         flex-direction: row;
@@ -26,21 +14,5 @@
 
     &__info {
         margin-bottom: 2rem;
-    }
-
-    &__link {
-        animation: zoomInAndOut 3s infinite;
-        transform: rotate(-2deg);
-    }
-}
-
-
-@keyframes zoomInAndOut {
-    0% {
-        transform: scale(1) rotate(-2deg);
-    }
-
-    50% {
-        transform: scale(1.2) rotate(2deg);
     }
 }

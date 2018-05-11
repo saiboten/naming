@@ -16,3 +16,30 @@
         border-top: 1px solid $color-primary;
     }
 }
+
+.link-list {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &__item {
+        text-decoration: none;
+        list-style: none;
+        cursor: pointer;
+        animation: zoomInAndOut 3s infinite;
+        transform: rotate(-1deg);
+    }
+}
+
+@keyframes zoomInAndOut {
+    0% {
+        transform: scale(1) rotate(-1deg);
+    }
+
+    50% {
+        transform: scale(1.05) rotate(1deg);
+    }
+}

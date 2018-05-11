@@ -2,7 +2,7 @@
 .header {
     text-align: center;
     padding: 0 10rem;
-    font-size: 2.5rem;
+    font-size: 2rem;
     height: 5rem;
     position: relative;
     border-radius: 3px;
@@ -14,9 +14,5 @@
 
     &__content {
         @include center-horisontal-vertical;
-    }
-
-    &:hover {
-
     }
 }

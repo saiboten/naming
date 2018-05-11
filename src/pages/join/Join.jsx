@@ -6,8 +6,11 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase } from 'react-redux-firebase';
 
+import { Notification } from '../../components/Notification';
 import { LinkButton } from '../../components/LinkButton';
 import { joinFailedAction, joinSuccessAction, clearJoinStatusAction } from '../../state/actions/name';
+
+import './Join.scss';
 
 export class JoinComponent extends React.Component {
   constructor(props) {
@@ -44,27 +47,28 @@ export class JoinComponent extends React.Component {
     Object.keys(availableNicknames)
       .filter(key => availableNicknames[key])
       .map(key => (
-        <li key={key}>
+        <li className="join__match-list-item" key={key}>
           {availableNicknames[key].nickname}
-          <button onClick={() => addFoundNickToCurrentUser(key, availableNicknames[key].nickname)}>Legg til</button>
+          <button className="button button--small" onClick={() => addFoundNickToCurrentUser(key, availableNicknames[key].nickname)}>Legg til</button>
         </li>));
 
     return (
-      <div className="createname">
-        <h2 className="createname__sub-heading heading-primary">Samarbeid med andre</h2>
-        <p className="createname__explanation">For å kunne samarbeide med andre må de gi deg en magisk påmeldingskode som du skriver inn under.</p>
-        <form className="createname__form" onSubmit={this.submit}>
-          <input className="createname__name" onChange={this.idChanged} type="text" value={this.state.id} placeholder="Magisk kode" />
-          <div className="createname__navigation">
+      <div className="join">
+        <h2 className="join__sub-heading heading-primary">Samarbeid med andre</h2>
+        <p className="join__explanation">For å kunne samarbeide med andre må de gi deg en magisk påmeldingskode som du skriver inn under.</p>
+        <form className="join__form" onSubmit={this.submit}>
+          <input className="join__name" onChange={this.idChanged} type="text" value={this.state.id} placeholder="Magisk kode" />
+          <div className="join__navigation">
             <LinkButton to="/" extraClass="button--small button--secondary">Tilbake</LinkButton>
-            <input className="button button--small createname__submit" type="submit" value="OK" />
+            <input className="button button--small join__submit" type="submit" value="OK" />
           </div>
         </form>
-        <ul>
+        <ul className="join__match-list">
           {availableNicknamesJsx}
         </ul>
-        {joinSuccess ? (<div>Det gikk bra</div>) : null}
-        {joinFailed ? (<div>Det gikk dårlig, bu</div>) : null}
+
+        {joinSuccess ? (<Notification>Fant bruker</Notification>) : null}
+        {joinFailed ? (<Notification>Fant ikke bruker</Notification>) : null}
 
       </div>);
   }

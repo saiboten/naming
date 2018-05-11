@@ -5,14 +5,19 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 
+
 import { logProps } from '../renderer/loadingRenderHoc';
 import { LinkButton } from '../../components/LinkButton';
+import { Notification } from '../../components/Notification';
+
+import './Administer.scss';
 
 class AdministerComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mail: ''
+      mail: '',
+      valid: true
     };
 
     this.updateMail = this.updateMail.bind(this);
@@ -22,7 +27,8 @@ class AdministerComponent extends React.Component {
   updateMail(e) {
     e.preventDefault();
     this.setState({
-      mail: e.target.value
+      mail: e.target.value,
+      valid: true
     });
   }
 
@@ -30,10 +36,20 @@ class AdministerComponent extends React.Component {
     const { addUser, nick } = this.props;
 
     e.preventDefault();
-    addUser(nick, this.state.mail);
-    this.setState({
-      mail: ''
-    });
+
+    const { mail } = this.state;
+
+    if (mail !== '' && mail.indexOf('@') !== -1) {
+      addUser(nick, this.state.mail);
+      this.setState({
+        mail: '',
+        valid: true
+      });
+    } else {
+      this.setState({
+        valid: false
+      });
+    }
   }
 
   render() {
@@ -47,15 +63,17 @@ class AdministerComponent extends React.Component {
           <input className="button" type="submit" value="Legg til" />
         </form>
 
-        <p>Deltagere:</p>
-        <ul>
-          {Object.values(participants).map(participant => (<li key={participant}>{participant}</li>))}
+        <h2 className="heading-primary u-margin-top-small">Deltagere</h2>
+        <ul className="link-list">
+          {Object.values(participants).map(participant => (<li className="link-list__item" key={participant}>{participant}</li>))}
         </ul>
 
-        <p>Magisk kodeord de må legge inn for å bli med</p>
-        <p>{nick}</p>
+        {this.state.valid ? null : <Notification>Nope</Notification>}
 
-        <LinkButton extraClass="nameactions__back button--small button--secondary" to="/">Tilbake</LinkButton>
+        <p>Magisk kodeord de må legge inn for å bli med</p>
+        <p className="input u-small-font administer__magic-word">{nick}</p>
+
+        <LinkButton extraClass="u-margin-top-small button--small button--secondary" to="/">Tilbake</LinkButton>
       </div>);
   }
 }

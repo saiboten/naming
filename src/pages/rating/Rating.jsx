@@ -11,8 +11,6 @@ import { Loader } from '../../components/Loader';
 import './Rating.scss';
 
 const renderRatedUsers = (usersObject, toggleNameAccepted, nick, matchingRatings) => {
-  console.log(matchingRatings);
-
   const userIds = Object.keys(usersObject);
   const users = userIds.map(key => ({
     id: key,
