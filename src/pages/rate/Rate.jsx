@@ -1,5 +1,5 @@
 import React from 'react';
-import { shape, func, bool, string } from 'prop-types';
+import { shape, func, bool, string, number } from 'prop-types';
 
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -12,7 +12,7 @@ import { setName } from '../../state/actions/name';
 import './Rate.scss';
 
 const RateComponent = ({
-  name: { id, name }, rate, getNewName, nick
+  name: { id, name }, rate, getNewName, nick, remainingNamesToVote
 }) => {
   const nameOrLoad = id ? (
     <div className="rate__name">{name.name} </div>
@@ -31,6 +31,7 @@ const RateComponent = ({
   return (
     <div className="rate">
       {nameOrLoad}
+      <p>{remainingNamesToVote}</p>
       {rateButtons}
       <div className="rate__back-button">
         <LinkButton extraClass="button--small button--secondary" to={`/nick/actions/${nick}`}>Tilbake</LinkButton>
@@ -48,7 +49,8 @@ RateComponent.propTypes = {
   }),
   rate: func.isRequired,
   getNewName: func.isRequired,
-  nick: string.isRequired
+  nick: string.isRequired,
+  remainingNamesToVote: number
 };
 
 RateComponent.defaultProps = {
@@ -57,7 +59,8 @@ RateComponent.defaultProps = {
       boy: false,
       name: ''
     }
-  }
+  },
+  remainingNamesToVote: 0
 };
 
 export const Rate = compose(
@@ -67,30 +70,24 @@ export const Rate = compose(
     `/nicknames/${nick}/rating/${store.getState().firebase.auth.uid}`
   ]),
   connect(
-    ({ name: { name } }, { match: { params: { nick } } }) => ({ name, nick }),
+    ({ name: { name }, firebase: { auth: { uid }, data: { names, nicknames } } }, { match: { params: { nick } } }) => {
+      const ratedNamesCount = nicknames && nicknames[nick] && nicknames[nick].rating[uid] ? Object.keys(nicknames[nick].rating[uid]).length : 0;
+      const totalNames = names ? Object.keys(names).length : 0;
+
+      return { name, nick, remainingNamesToVote: totalNames - ratedNamesCount };
+    },
     (dispatch, { firebase }) => ({
       getNewName: (nick) => {
-        dispatch((dispatcher, getState) => {
-          const { firebase: { auth: { uid }, data } } = getState();
-
-          const { names, nicknames } = data;
-
-          if (names) {
-            const ratedNames = nicknames[nick].rating[uid];
-
-            dispatcher(setName(names, ratedNames));
-          }
-        });
+        dispatch(setName(nick));
       },
       rate: (nick, id, name, thumbsUp) => {
         dispatch((dispatcher, getState) => {
-          const { firebase: { data: { names } } } = getState();
           firebase.set(`nicknames/${nick}/rating/${getState().firebase.auth.uid}/${id}`, {
             name: name.name,
             boy: name.boy,
             accepted: thumbsUp
           });
-          dispatcher(setName(names));
+          dispatcher(setName(nick));
         });
       }
     })

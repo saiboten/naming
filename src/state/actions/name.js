@@ -1,20 +1,44 @@
 import { random } from 'lodash';
 import * as types from '../types';
 
-export const setName = (names) => {
-  const keys = Object.keys(names);
-  const randomNumber = random(keys.length);
-  const randomID = keys[randomNumber];
+export const setName = nick => (dispatch, getState) => {
+  const { firebase: { auth: { uid }, data } } = getState();
+  const { names, nicknames } = data;
 
-  const name = {
-    id: randomID,
-    name: names[randomID]
-  };
+  if (names) {
+    const ratedNames = nicknames[nick].rating[uid] ? nicknames[nick].rating[uid] : {};
 
-  return {
-    type: types.SET_NAME,
-    name
-  };
+    const allNameKeys = Object.keys(names);
+    const ratedNameKeys = ratedNames ? Object.keys(ratedNames) : [];
+
+    if (allNameKeys.length === ratedNameKeys.length) {
+      return {
+        type: types.ALL_NAMES_RATED
+      };
+    }
+
+    let name;
+
+    while (name === undefined) {
+      const randomNameInt = random(allNameKeys.length);
+      const randomNameID = allNameKeys[randomNameInt];
+      const randomRatedName = ratedNames[randomNameID];
+      const randomAllNamesName = names[randomNameID];
+
+      if (randomRatedName === undefined) {
+        name = {
+          name: randomAllNamesName,
+          id: randomNameID
+        };
+      }
+    }
+
+    dispatch({
+      type: types.SET_NAME,
+      name
+    });
+  }
+  return null;
 };
 
 export const joinFailedAction = () => ({

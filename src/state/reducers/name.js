@@ -7,6 +7,11 @@ const name = (state = {}, action) => {
         ...state,
         name: action.name
       };
+    case types.ALL_NAMES_RATED:
+      return {
+        ...state,
+        allRated: true
+      };
     case types.FIND_JOIN_USER_SUCCESS:
       return {
         ...state,

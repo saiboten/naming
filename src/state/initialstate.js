@@ -1,6 +1,7 @@
 export default {
   name: {
     joinSuccess: false,
-    joinFailed: false
+    joinFailed: false,
+    allRated: false
   }
 };
