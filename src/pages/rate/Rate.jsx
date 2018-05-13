@@ -72,7 +72,7 @@ export const Rate = compose(
   ]),
   connect(
     ({ name: { name }, firebase: { auth: { uid }, data: { names, nicknames } } }, { match: { params: { nick } } }) => {
-      const ratedNamesCount = nicknames && nicknames[nick] && nicknames[nick].rating[uid] ? Object.keys(nicknames[nick].rating[uid]).length : 0;
+      const ratedNamesCount = nicknames && nicknames[nick] && nicknames[nick].rating && nicknames[nick].rating[uid] ? Object.keys(nicknames[nick].rating[uid]).length : 0;
       const totalNames = names ? Object.keys(names).length : 0;
 
       return { name, nick, remainingNamesToVote: totalNames - ratedNamesCount };

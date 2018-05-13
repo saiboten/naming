@@ -1,5 +1,5 @@
 import React from 'react';
-import { any, string, func, array } from 'prop-types';
+import { any, string, func, array, bool } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
@@ -10,69 +10,115 @@ import { Loader } from '../../components/Loader';
 
 import './Rating.scss';
 
-const renderRatedUsers = (usersObject, toggleNameAccepted, nick, matchingRatings) => {
-  const userIds = Object.keys(usersObject);
-  const users = userIds.map(key => ({
-    id: key,
-    name: usersObject[key].name,
-    accepted: usersObject[key].accepted,
-    boy: usersObject[key].boy,
-  })).sort((a, b) => a.name.localeCompare(b.name));
+class RenderRatedUsers extends React.Component {
+  constructor(props) {
+    super(props);
 
-  const thumbsUpList = users.filter(user => user.accepted);
-  const thumbsDownList = users.filter(user => !user.accepted);
+    this.state = {
+      viewBadNames: false
+    };
 
-  const thumbsUp = thumbsUpList.map(el => (
-    <div className="rating__list-element" key={el.name}>
-      {el.name}
-      <button className="button button--small" onClick={() => toggleNameAccepted(nick, el)}>
-        <svg className="rating__down">
-          <use xlinkHref="../../../img/sprite.svg#icon-thumbs-down" />
-        </svg>
-      </button>
-    </div>
-  ));
+    this.toggleViewBadNames = this.toggleViewBadNames.bind(this);
+  }
 
-  const thumbsDown = thumbsDownList.map(el => (
-    <div className="rating__list-element" key={el.name}>
-      {el.name}
-      <button className="button button--small" onClick={() => toggleNameAccepted(nick, el)}>
-        <svg className="rating__up">
-          <use xlinkHref="../../../img/sprite.svg#icon-thumbs-up" />
-        </svg>
-      </button>
-    </div>
-  ));
+  toggleViewBadNames() {
+    this.setState({
+      viewBadNames: !this.state.viewBadNames
+    });
+  }
 
-  const superNames = matchingRatings.map(({ name }) => (
-    <div className="rating__list-element" key={name}>
-      {name}
-      {/* <button className="button button--small" onClick={() => toggleNameAccepted(nick, el)}>
-        <svg className="rating__up">
-          <use xlinkHref="../../../img/sprite.svg#icon-thumbs-up" />
-        </svg>
-      </button> */}
-    </div>));
+  render() {
+    console.log('wth', this.props);
+    const {
+      myRatings, toggleNameAccepted, nick, matchingRatings, isMultiPlayer
+    } = this.props;
 
-  return (
-    <div>
-      <h1>Felles</h1>
-      {superNames}
-      <h1>Dine valg</h1>
-      <h2 className="rating__sub-header heading-primary">Bra navn <svg className="rating__header-icon"><use xlinkHref="../../../img/sprite.svg#icon-thumbs-up" /></svg></h2>
-      <div className="rating__list">{thumbsUp}</div>
-      <h2 className="rating__sub-header heading-primary">Dårlige navn <svg className="rating__header-icon"><use xlinkHref="../../../img/sprite.svg#icon-thumbs-down" /></svg></h2>
-      <div className="rating__list">{thumbsDown}</div>
-    </div>);
+    const userIds = Object.keys(myRatings);
+    const users = userIds.map(key => ({
+      id: key,
+      name: myRatings[key].name,
+      accepted: myRatings[key].accepted,
+      boy: myRatings[key].boy,
+    })).sort((a, b) => a.name.localeCompare(b.name));
+
+    const thumbsUpList = users.filter(user => user.accepted);
+    const thumbsDownList = users.filter(user => !user.accepted);
+
+    const thumbsUp = thumbsUpList.length === 0 ? <div>Tom liste</div> : thumbsUpList.map(el => (
+      <div className="rating__list-element" key={el.name}>
+        {el.name}
+        <button className="button button--small" onClick={() => toggleNameAccepted(nick, el)}>
+          <svg className="rating__down">
+            <use xlinkHref="../../../img/sprite.svg#icon-thumbs-down" />
+          </svg>
+        </button>
+      </div>
+    ));
+
+    const thumbsDown = thumbsDownList.length === 0 ? <div>Tom liste</div> : thumbsDownList.map(el => (
+      <div className="rating__list-element" key={el.name}>
+        {el.name}
+        <button className="button button--small" onClick={() => toggleNameAccepted(nick, el)}>
+          <svg className="rating__up">
+            <use xlinkHref="../../../img/sprite.svg#icon-thumbs-up" />
+          </svg>
+        </button>
+      </div>
+    ));
+
+    const superNames = isMultiPlayer ? matchingRatings.map(({ name }) => (
+      <div className="rating__list-element" key={name}>
+        {name}
+        {/* <button className="button button--small" onClick={() => toggleNameAccepted(nick, el)}>
+          <svg className="rating__up">
+            <use xlinkHref="../../../img/sprite.svg#icon-thumbs-up" />
+          </svg>
+        </button> */}
+      </div>)) : null;
+
+    return (
+      <div>
+        {superNames ? <React.Fragment> <h1>Felles</h1> {superNames}</React.Fragment> : null}
+        <h1>Dine valg</h1>
+        <h2 className="rating__sub-header heading-primary">Bra navn <svg className="rating__header-icon"><use xlinkHref="../../../img/sprite.svg#icon-thumbs-up" /></svg></h2>
+        <div className="rating__list">{thumbsUp}</div>
+
+        <div className="rating__toggle-bad-names-button-container">
+
+          <button className="button button--small rating__toggle-bad-names-button" onClick={this.toggleViewBadNames}>{this.state.viewBadNames ? 'Skjul buu navn' : 'Vis buu navn'}</button>
+        </div>
+        {this.state.viewBadNames ?
+          <React.Fragment>
+            <h2 className="rating__sub-header heading-primary">Dårlige navn <svg className="rating__header-icon"><use xlinkHref="../../../img/sprite.svg#icon-thumbs-down" /></svg>
+            </h2>
+            <div className="rating__list">{thumbsDown}</div>
+          </React.Fragment> : null}
+      </div>);
+  }
+}
+
+RenderRatedUsers.propTypes = {
+  nick: string.isRequired,
+  matchingRatings: array,
+  toggleNameAccepted: func.isRequired,
+  isMultiPlayer: bool,
+  myRatings: any
 };
 
-export const RatingComponent = ({
-  myRatings, nick, toggleNameAccepted, matchingRatings
-}) => {
-  const userList = myRatings ? renderRatedUsers(myRatings, toggleNameAccepted, nick, matchingRatings) : <Loader />;
+
+RenderRatedUsers.defaultProps = {
+  matchingRatings: [],
+  myRatings: {},
+  isMultiPlayer: false
+};
+
+export const RatingComponent = (props) => {
+  const { myRatings, nick } = props;
+  const userList = myRatings ? <RenderRatedUsers {...props} /> : <Loader />;
 
   return (
     <div className="rating">
+      {Object.keys(myRatings).length > 10 ? <LinkButton extraClass="rating__back button--small button--secondary" to={`/nick/actions/${nick}`}>Tilbake</LinkButton> : null}
       {userList}
       <LinkButton extraClass="rating__back button--small button--secondary" to={`/nick/actions/${nick}`}>Tilbake</LinkButton>
     </div>);
@@ -80,15 +126,11 @@ export const RatingComponent = ({
 
 RatingComponent.propTypes = {
   myRatings: any,
-  nick: string.isRequired,
-  matchingRatings: array,
-  toggleNameAccepted: func.isRequired
+  nick: string.isRequired
 };
 
 RatingComponent.defaultProps = {
-  myRatings: {},
-  matchingRatings: [],
-  uid: ''
+  myRatings: {}
 };
 
 export const findHitsOnBoth = (allRatings, me) => {
@@ -117,8 +159,9 @@ export const Rating = compose(
   connect(
     ({ firebase: { auth: { uid }, data: { nicknames } } }, { match: { params: { nick } } }) =>
       ({
-        myRatings: nicknames && nicknames[nick] ? nicknames[nick].rating[uid] : {},
-        matchingRatings: nicknames && nicknames[nick] ? findHitsOnBoth(nicknames[nick].rating, uid) : [],
+        myRatings: nicknames && nicknames[nick] && nicknames[nick].rating ? nicknames[nick].rating[uid] : {},
+        matchingRatings: nicknames && nicknames[nick] && nicknames[nick].rating ? findHitsOnBoth(nicknames[nick].rating, uid) : [],
+        isMultiPlayer: nicknames && nicknames[nick] && nicknames[nick].rating && Object.keys(nicknames[nick].rating).length > 1,
         uid,
         nick
       }),

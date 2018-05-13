@@ -48,4 +48,10 @@
         margin-top: 2rem;
         align-self: flex-end;
     }
+
+    &__toggle-bad-names-button-container {
+        display: flex;
+        justify-content: flex-start;
+    }
+
 }
