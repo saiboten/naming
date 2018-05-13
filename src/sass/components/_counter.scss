@@ -1,0 +1,17 @@
+.counter {
+    position: absolute;
+    top: 0;
+    right: -4rem;
+    border: 2px solid $color-primary;
+    background-color: $color-secondary;
+    border-radius: 50%;
+    height: 4rem;
+    width: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__number {
+        font-size: 1.3rem;
+    }
+}

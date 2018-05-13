@@ -8,6 +8,7 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { LinkButton } from '../../components/LinkButton';
 import { logProps } from '../../pages/renderer/loadingRenderHoc';
 import { setName } from '../../state/actions/name';
+import { Counter } from '../../components/Counter';
 
 import './Rate.scss';
 
@@ -15,7 +16,7 @@ const RateComponent = ({
   name: { id, name }, rate, getNewName, nick, remainingNamesToVote
 }) => {
   const nameOrLoad = id ? (
-    <div className="rate__name">{name.name} </div>
+    <div className="rate__name">{name.name} <Counter>{remainingNamesToVote}</Counter></div>
   ) : <button className="rate__get-name button" onClick={() => getNewName(nick)}>Start sortering</button>;
 
   const rateButtons = id ? (
@@ -31,8 +32,8 @@ const RateComponent = ({
   return (
     <div className="rate">
       {nameOrLoad}
-      <p>{remainingNamesToVote}</p>
       {rateButtons}
+
       <div className="rate__back-button">
         <LinkButton extraClass="button--small button--secondary" to={`/nick/actions/${nick}`}>Tilbake</LinkButton>
       </div>

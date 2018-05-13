@@ -5,6 +5,10 @@
     justify-content: space-around;
     align-items: center;
 
+    &__name {
+        position: relative;
+    }
+
     &__name,
     &__get-name {
         font-size: 5rem;
