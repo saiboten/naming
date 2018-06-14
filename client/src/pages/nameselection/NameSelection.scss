@@ -15,4 +15,10 @@
     &__info {
         margin-bottom: 2rem;
     }
+
+    &__logout {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1.5rem;
+    }
 }

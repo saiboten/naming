@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { any } from 'prop-types';
+import { any, func } from 'prop-types';
 
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -12,7 +12,7 @@ import { LinkButton } from '../../components/LinkButton';
 
 import './NameSelection.scss';
 
-const NameSelectionComponent = ({ nicknames }) => (
+const NameSelectionComponent = ({ nicknames, logOut }) => (
   <div className="nameselection">
     <h2 className="heading-primary">Hvem du vil velge navn til?</h2>
     <ul className="nameselection__name-list link-list">
@@ -23,10 +23,15 @@ const NameSelectionComponent = ({ nicknames }) => (
       <LinkButton extraClass="nameselection__action button--small" to="/createname">Nytt navn</LinkButton>
       <LinkButton extraClass="nameselection__action button--small" to="/join">Samarbeid</LinkButton>
     </div>
+    <div className="nameselection__logout">
+      <button className="button button--small" onClick={logOut}>Logg ut</button>
+    </div>
+
   </div>);
 
 NameSelectionComponent.propTypes = {
-  nicknames: any
+  nicknames: any,
+  logOut: func.isRequired
 };
 
 NameSelectionComponent.defaultProps = {
@@ -37,7 +42,19 @@ export const NameSelection = compose(
   firebaseConnect((props, store) => [
     `users/${store.getState().firebase.auth.uid}/nicknames`
   ]),
-  connect(({ firebase: { data: { users }, auth } }) => ({
-    nicknames: users && users[auth.uid].nicknames,
-  }))
+  connect(
+    ({ firebase: { data: { users }, auth } }) => ({
+      nicknames: users && users[auth.uid].nicknames,
+    }),
+    (dispatch, { firebase }) => ({
+      logOut: (e) => {
+        e.preventDefault();
+        firebase.auth().signOut().then(() => {
+          console.log('Logged out');
+        }).catch((error) => {
+          console.log(error);
+        });
+      }
+    })
+  )
 )(NameSelectionComponent);
