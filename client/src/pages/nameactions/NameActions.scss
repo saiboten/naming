@@ -12,6 +12,11 @@
         flex-direction: column;
         justify-content: space-around;
         margin-bottom: 1rem;
+
+        @media only screen and (min-width: 56.25em) { // $bp-medium
+            flex-direction: row;
+            align-items: flex-start;
+        }
     }
 
     &__button {

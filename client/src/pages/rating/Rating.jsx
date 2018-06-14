@@ -76,7 +76,7 @@ class RenderRatedUsers extends React.Component {
       </div>)) : null;
 
     return (
-      <div>
+      <div className="rating__container">
         {superNames ? <React.Fragment> <h1>Felles</h1> {superNames}</React.Fragment> : null}
         <h1>Dine valg</h1>
         <h2 className="rating__sub-header heading-primary">Bra navn <svg className="rating__header-icon"><use xlinkHref="../../../img/sprite.svg#icon-thumbs-up" /></svg></h2>
