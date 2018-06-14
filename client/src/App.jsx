@@ -42,7 +42,7 @@ const enhancers = compose(
     thunk.withExtraArgument(getFirebase) // Pass getFirebase function as extra argument
   ),
   reactReduxFirebase(firebase, rrfConfig),
-  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 /* eslint-enable */
 
@@ -62,7 +62,7 @@ const App = () => (
         <Route path="/nick/rating/:nick" component={Rating} />
         <Route path="/nick/administer/:nick" component={Administer} />
         <Route path="/join" component={Join} />
-
+        {/* <Route path="/add" component={AddDataTest} /> */}
         <Footer />
       </div>
     </Router>

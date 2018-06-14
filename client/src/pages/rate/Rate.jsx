@@ -1,5 +1,5 @@
 import React from 'react';
-import { shape, func, bool, string, number } from 'prop-types';
+import { shape, func, bool, string } from 'prop-types';
 
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -8,15 +8,14 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { LinkButton } from '../../components/LinkButton';
 import { logProps } from '../../pages/renderer/loadingRenderHoc';
 import { setName } from '../../state/actions/name';
-import { Counter } from '../../components/Counter';
 
 import './Rate.scss';
 
 const RateComponent = ({
-  name: { id, name }, rate, getNewName, nick, remainingNamesToVote
+  name: { id, name }, rate, getNewName, nick
 }) => {
   const nameOrLoad = id ? (
-    <div className="rate__name">{name.name} <Counter>{remainingNamesToVote}</Counter></div>
+    <div className="rate__name">{name.name}</div>
   ) : <button className="rate__get-name button" onClick={() => getNewName(nick)}>Start sortering</button>;
 
   const rateButtons = id ? (
@@ -50,8 +49,7 @@ RateComponent.propTypes = {
   }),
   rate: func.isRequired,
   getNewName: func.isRequired,
-  nick: string.isRequired,
-  remainingNamesToVote: number
+  nick: string.isRequired
 };
 
 RateComponent.defaultProps = {
@@ -60,8 +58,7 @@ RateComponent.defaultProps = {
       boy: false,
       name: ''
     }
-  },
-  remainingNamesToVote: 0
+  }
 };
 
 export const Rate = compose(
@@ -71,15 +68,10 @@ export const Rate = compose(
     `/nicknames/${nick}/rating/${store.getState().firebase.auth.uid}`
   ]),
   connect(
-    ({ name: { name }, firebase: { auth: { uid }, data: { names, nicknames } } }, { match: { params: { nick } } }) => {
-      const ratedNamesCount = nicknames && nicknames[nick] && nicknames[nick].rating && nicknames[nick].rating[uid] ? Object.keys(nicknames[nick].rating[uid]).length : 0;
-      const totalNames = names ? Object.keys(names).length : 0;
-
-      return { name, nick, remainingNamesToVote: totalNames - ratedNamesCount };
-    },
+    ({ name: { name } }, { match: { params: { nick } } }) => ({ name, nick }),
     (dispatch, { firebase }) => ({
-      getNewName: (nick) => {
-        dispatch(setName(nick));
+      getNewName: () => {
+        dispatch(setName());
       },
       rate: (nick, id, name, thumbsUp) => {
         dispatch((dispatcher, getState) => {
@@ -88,7 +80,7 @@ export const Rate = compose(
             boy: name.boy,
             accepted: thumbsUp
           });
-          dispatcher(setName(nick));
+          dispatcher(setName());
         });
       }
     })

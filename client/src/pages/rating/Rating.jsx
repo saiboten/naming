@@ -28,7 +28,6 @@ class RenderRatedUsers extends React.Component {
   }
 
   render() {
-    console.log('wth', this.props);
     const {
       myRatings, toggleNameAccepted, nick, matchingRatings, isMultiPlayer
     } = this.props;
