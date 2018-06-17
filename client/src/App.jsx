@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route } from 'react-router-dom';
 
 import { createStore, compose, applyMiddleware } from 'redux';
 
@@ -16,6 +16,7 @@ import { Header } from './header/Header';
 import { Footer } from './footer/Footer';
 import initialState from './state/initialstate';
 // import AddDataTest from './components/AddDataTest';
+// import RemoveDuplicates from './components/RemoveDuplicates';
 
 import { Login, CreateName, Start, NameActions, Rate, Rating, Administer, Join } from './pages';
 
@@ -63,6 +64,8 @@ const App = () => (
         <Route path="/nick/administer/:nick" component={Administer} />
         <Route path="/join" component={Join} />
         {/* <Route path="/add" component={AddDataTest} /> */}
+        {/* <Route path="/dedup" component={RemoveDuplicates} /> */}
+
         <Footer />
       </div>
     </Router>
